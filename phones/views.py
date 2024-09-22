@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Phone
 
 
@@ -32,5 +32,13 @@ def show_catalog(request):
 
 def show_product(request, slug):
     template = 'product.html'
-    context = {}
+    
+    # Извлекаем телефон по slug
+    phone = get_object_or_404(Phone, slug=slug)
+    
+    # Передаём данные о телефоне в шаблон
+    context = {
+        'phone': phone
+    }
+    
     return render(request, template, context)
